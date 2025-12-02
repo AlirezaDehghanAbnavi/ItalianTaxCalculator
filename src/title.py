@@ -3,7 +3,7 @@ import tkinter as tk
 
 class Title(tk.Label):
     def __init__(self, parent):
-        self.photo = tk.PhotoImage(file='.\\photos\\Logo.png')
+        self.photo = tk.PhotoImage(file='./photos/Logo.png')
 
 
         super().__init__(

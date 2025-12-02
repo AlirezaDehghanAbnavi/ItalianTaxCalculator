@@ -16,7 +16,7 @@ class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
 
 
         # Set New Icon
-        icon = tk.PhotoImage(file='.\\photos\\italia.png') 
+        icon = tk.PhotoImage(file='./photos/italia.png') 
         self.iconphoto(True, icon)
 
 

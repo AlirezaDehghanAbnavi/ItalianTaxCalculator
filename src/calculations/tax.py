@@ -1,9 +1,24 @@
-IRPEF_BRACKETS = {
-    (0, 28000, 0.23), 
-    (28001, 50000, 0.35),
-    (50001, float("inf"), 0.43)
-}
-INPS_TAX = 0.0919
+import json
+import os
+
+
+base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+data_path = os.path.join(base_dir, "data", "national_tax.json")
+
+
+with open(data_path, "r") as f:
+    try:
+        data = json.load(f)
+    except FileNotFoundError:
+        raise FileNotFoundError(f"Tax data file not found: {data_path}")
+
+
+IRPEF_BRACKETS = [
+    (bracket[0], float('inf') if bracket[1] == "inf" else bracket[1], bracket[2])
+    for bracket in data.get("IRPEF_BRACKETS", [])
+]
+
+INPS_TAX = data.get("INPS_TAX", 0.0919)
 
 
 def getSalary(salary: str) -> float:

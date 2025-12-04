@@ -1,4 +1,4 @@
-from window import MainWindow
+from components.window import MainWindow
 
 
 IRPEF_BRACKETS = {
@@ -32,8 +32,8 @@ def calculateTax(grossAnnualSalary):
 
 
 def main():
-    # app = MainWindow()
-    # app.mainloop()
+    app = MainWindow()
+    app.mainloop()
     grossAnnualSalary = getSalary("How much do you make annually? ")
     salaryAfterTax = calculateTax(grossAnnualSalary)
     print(f"Your salary after tax is €{round(salaryAfterTax, 2)}")

@@ -1,7 +1,7 @@
 import tkinter as tk
-from title import Title
-from click import Click
-from counter import Counter
+from .title import Title
+from .click import Click
+from .counter import Counter
 
 
 class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk

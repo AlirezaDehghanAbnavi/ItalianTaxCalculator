@@ -1,24 +1,38 @@
 import json
 import os
 
+INPS_TAX = 0.0919
 
 base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-data_path = os.path.join(base_dir, "data", "national_tax.json")
+nationalTaxPath = os.path.join(base_dir, "data", "national_tax.json")
+regionalTaxPath = os.path.join(base_dir, "data", "regional_tax.json")
 
 
-with open(data_path, "r") as f:
+def loadTaxFile(file_path: str) -> dict:
     try:
-        data = json.load(f)
+        with open(file_path, "r", encoding="utf-8") as f:
+            return json.load(f)
     except FileNotFoundError:
-        raise FileNotFoundError(f"Tax data file not found: {data_path}")
+        raise FileNotFoundError(f"Tax data file not found: {file_path}")
 
+
+nationalData = loadTaxFile(nationalTaxPath)
 
 IRPEF_BRACKETS = [
     (bracket[0], float('inf') if bracket[1] == "inf" else bracket[1], bracket[2])
-    for bracket in data.get("IRPEF_BRACKETS", [])
+    for bracket in nationalData.get("IRPEF_BRACKETS", [])
 ]
 
-INPS_TAX = data.get("INPS_TAX", 0.0919)
+
+regionalData = loadTaxFile(regionalTaxPath)
+
+REGIONAL_BRACKETS = dict()
+
+for region, brackets in regionalData.items():
+    REGIONAL_BRACKETS[region] = [
+        (bracket[0], float('inf') if bracket[1] == "inf" else bracket[1], bracket[2])
+        for bracket in brackets
+    ]
 
 
 def getSalary(salary: str) -> float:
@@ -29,7 +43,22 @@ def getSalary(salary: str) -> float:
             print("Invalid format, Please try again with correct format (Float, Integer).")
 
 
-def calculateTax(grossAnnualSalary):
+def findRegion(region: str) -> str:
+    while True:
+        regionName = input(region).strip().lower()
+        found = False
+        for region in REGIONAL_BRACKETS.keys():
+            if regionName in region.lower():
+                found = True
+                regionName = region
+                break
+        if found:
+            return regionName
+        else:
+            print("Region not found. Please try again.")
+
+
+def calculateTax(grossAnnualSalary, regionInput):
     salaryAfterTax: float = grossAnnualSalary
     incomeAfterINPS: float = grossAnnualSalary * (1 - INPS_TAX) 
     amountOfTax: float = 0
@@ -41,6 +70,12 @@ def calculateTax(grossAnnualSalary):
         if incomeAfterINPS > lowerBound:
             taxableIncome = min(incomeAfterINPS, upperBound) - lowerBound
             amountOfTax += taxableIncome * taxRate
+   
+    for lower, upper, rate in REGIONAL_BRACKETS[regionInput]:
+        if incomeAfterINPS > lower:
+            taxableIncome = min(incomeAfterINPS, upper) - lower
+            amountOfTax += taxableIncome * rate
 
     salaryAfterTax = incomeAfterINPS - amountOfTax
+    
     return salaryAfterTax

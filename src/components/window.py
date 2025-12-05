@@ -1,8 +1,6 @@
 import tkinter as tk
 from .title import Title
-from .click import Click
-from .counter import Counter
-
+from calculations.tax import *
 
 class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
     def __init__(self
@@ -22,21 +20,55 @@ class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
 
         # Displaying title label
         self.titleLable = Title(self)
-        self.titleLable.pack()
+        self.titleLable.pack(pady=5)
 
 
-        # Displaying counter label
-        self.count = 0
-        self.counterLabel = Counter(self, self.count)
-        self.counterLabel.pack()
+        # Region input
+        tk.Label(self, text="Which region do you live in?", bg="#123456", fg="white").pack()
+        self.regionEntry = tk.Entry(self, width=30)
+        self.regionEntry.pack(pady=5)
 
 
-        # Button
-        self.button = Click(self, "Click me", command=self.countIncrement)
-        self.button.pack()
+        # Salary input
+        tk.Label(self, text="How much do you make annually?", bg="#123456", fg="white").pack()
+        self.salaryEntry = tk.Entry(self, width=30)
+        self.salaryEntry.pack(pady=5)
 
 
-    def countIncrement(self):
-        self.count += 1
-        self.counterLabel.onClick(self.count)
+        # Calculate button
+        self.calcButton = tk.Button(self, text="calculate", command=self.calculate)
+        self.calcButton.pack(pady=20)
+
+
+        # Result label
+        self.resultLabel = tk.Label(self, text="", bg="#123456", fg="white", justify="left")
+        self.resultLabel.pack(pady=10)
+
+
+        # Reset Button
+        self.resetButton = tk.Button(self, text="Reset", command=self.reset)
+        self.resetButton.pack(pady=10)
+
+    def calculate(self):
+        regionInput = findRegion(self.regionEntry.get())
+        grossAnnualSalary = getSalary(self.salaryEntry.get())
+        salaryAfterTax = calculateTax(grossAnnualSalary, regionInput)
+
+        # Calculate tax
+        salaryAfterTax = calculateTax(grossAnnualSalary, regionInput)
+        total_tax = grossAnnualSalary - salaryAfterTax
+        monthly_income = salaryAfterTax / 12
+
+        # Display result
+        self.resultLabel.config(
+            text=f"Your salary after tax is €{round(salaryAfterTax, 2)}\n"
+                f"You've paid a total amount of €{round(total_tax, 2)} in taxes\n"
+                f"You make €{round(monthly_income, 2)} each month (After taxes)"
+        )
+
+    
+    def reset(self):
+        self.regionEntry.delete(0, tk.END)
+        self.salaryEntry.delete(0, tk.END)
+        self.resultLabel.config(text="")
         

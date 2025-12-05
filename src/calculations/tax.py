@@ -35,27 +35,25 @@ for region, brackets in regionalData.items():
     ]
 
 
-def getSalary(salary: str) -> float:
+def getSalary(salary: str = None) -> float:
     while True:
+        if salary is None:
+            salary = input("How much do you make annually? ")
         try:
-            return float(input(salary))
+            return float(salary)
         except ValueError:
             print("Invalid format, Please try again with correct format (Float, Integer).")
 
 
-def findRegion(region: str) -> str:
-    while True:
-        regionName = input(region).strip().lower()
-        found = False
-        for region in REGIONAL_BRACKETS.keys():
-            if regionName in region.lower():
-                found = True
-                regionName = region
-                break
-        if found:
-            return regionName
-        else:
-            print("Region not found. Please try again.")
+def findRegion(regionInput: str = None) -> str:
+    if regionInput is None:
+        regionInput = input("Which region do you live in? ").strip()
+
+    for region in REGIONAL_BRACKETS.keys():
+        if regionInput.lower() in region.lower():
+            return region
+
+    raise ValueError("Region not found")
 
 
 def calculateTax(grossAnnualSalary, regionInput):

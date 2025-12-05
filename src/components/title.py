@@ -8,7 +8,8 @@ class Title(tk.Label):
 
         super().__init__(
             parent,
-            text="Welcome!",
+            text="Welcome!\n" \
+            "You can calculate your taxes here",
             font=("Arial", 20),
             bg="#123458",
             fg="white",

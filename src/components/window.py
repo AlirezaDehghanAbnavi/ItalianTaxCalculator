@@ -6,7 +6,7 @@ from calculations.tax import *
 class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
     def __init__(self):    # JAVA -> Constructor MainWindow(){}
         super().__init__()
- 
+
 
         self.geometry("590x750") # Determines size
         self.title("Italian Tax Calculator") # Title
@@ -14,7 +14,7 @@ class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
 
 
         # Set New Icon
-        icon = tk.PhotoImage(file='./photos/italia.png') 
+        icon = tk.PhotoImage(file='./photos/italia.png')
         self.iconphoto(True, icon)
 
 
@@ -67,8 +67,8 @@ class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
         """Demonstrates final results based on inputs."""
         # Empty/Invalid cases
         if not self.region_entry.get() or not self.salary_entry.get():
-                messagebox.showerror("Input error", "Please complete both fields")
-                return
+            messagebox.showerror("Input error", "Please complete both fields")
+            return
         try:
             region_input = find_region(self.region_entry.get())
             gross_annual_salary = get_salary(self.salary_entry.get())
@@ -89,9 +89,7 @@ class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
         )
 
 
-    
     def reset(self):
         self.region_entry.delete(0, tk.END)
         self.salary_entry.delete(0, tk.END)
-        self.result_label.config(text="")
-        
+        self.result_label.config(text="")      

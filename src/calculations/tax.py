@@ -46,9 +46,6 @@ def get_salary(salary_input: str = None) -> float:
     except ValueError:
         raise ValueError("Invalid format, Please try again with correct format (Float, Integer).")
 
-        
-            
-
 
 def find_region(region_input: str = None) -> str:
     """This function finds the region from a .json data file."""
@@ -65,22 +62,22 @@ def find_region(region_input: str = None) -> str:
 def calculate_tax(gross_annual_salary, region_input):
     """This function is the main logic behind calculating taxes."""
     salary_after_tax: float = gross_annual_salary
-    income_after_INPS: float = gross_annual_salary * (1 - INPS_TAX) 
+    income_after_inps: float = gross_annual_salary * (1 - INPS_TAX)
     tax_amount: float = 0
-    
-    if income_after_INPS <= 12000:
-        return income_after_INPS
+
+    if income_after_inps <= 12000:
+        return income_after_inps
 
     for lower, upper, tax in IRPEF_BRACKETS:
-        if income_after_INPS > lower:
-            taxable_income = min(income_after_INPS, upper) - lower
+        if income_after_inps > lower:
+            taxable_income = min(income_after_inps, upper) - lower
             tax_amount += taxable_income * tax
-   
+
     for lower, upper, rate in REGIONAL_BRACKETS[region_input]:
-        if income_after_INPS > lower:
-            taxable_income = min(income_after_INPS, upper) - lower
+        if income_after_inps > lower:
+            taxable_income = min(income_after_inps, upper) - lower
             tax_amount += taxable_income * rate
 
-    salary_after_tax = income_after_INPS - tax_amount
-    
+    salary_after_tax = income_after_inps - tax_amount
+
     return salary_after_tax

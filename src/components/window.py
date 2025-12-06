@@ -81,7 +81,7 @@ class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
             region_input = find_region(self.region_entry.get())
             gross_annual_salary = get_salary(self.salary_entry.get())
 
-        except Exception as error:
+        except (ValueError, TypeError) as error:
             messagebox.showerror("Input error", str(error))
 
         # Calculate tax

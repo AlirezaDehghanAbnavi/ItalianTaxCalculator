@@ -3,7 +3,7 @@ This module handles tax calculations and data loading for the TaxCalculator proj
 It provides functions to read JSON files and compute taxes.
 """
 import json
-from utils.paths import DATA_DIR
+from src.utils.paths import DATA_DIR
 
 INPS_TAX = 0.0919
 

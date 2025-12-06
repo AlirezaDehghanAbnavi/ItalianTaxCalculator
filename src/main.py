@@ -1,5 +1,5 @@
 """Combining different modules used to implement the tax calculator."""
-from components.window import MainWindow
+from src.components.window import MainWindow
 
 
 def main():

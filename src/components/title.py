@@ -1,6 +1,6 @@
 """Seperate class to organize title better"""
 import tkinter as tk
-from utils.paths import PHOTOS_DIR
+from src.utils.paths import PHOTOS_DIR
 
 
 class Title(tk.Label):

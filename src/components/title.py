@@ -2,7 +2,9 @@ import tkinter as tk
 
 
 class Title(tk.Label):
+    """Defining a title for the calculator."""
     def __init__(self, parent):
+        """Extending the Label from tkinter."""
         self.photo = tk.PhotoImage(file='./photos/Logo.png')
 
 

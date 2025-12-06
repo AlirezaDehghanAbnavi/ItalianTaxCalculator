@@ -1,3 +1,7 @@
+"""
+This module handles tax calculations and data loading for the TaxCalculator project.
+It provides functions to read JSON files and compute taxes.
+"""
 import json
 import os
 
@@ -13,8 +17,8 @@ def load_tax_file(file_path: str) -> dict:
     try:
         with open(file_path, "r", encoding="utf-8") as f:
             return json.load(f)
-    except FileNotFoundError:
-        raise FileNotFoundError(f"Tax data file not found: {file_path}")
+    except FileNotFoundError as err:
+        raise FileNotFoundError(f"Tax data file not found: {file_path}") from err
 
 
 national_data = load_tax_file(national_tax_path)
@@ -27,7 +31,7 @@ IRPEF_BRACKETS = [
 
 regional_data = load_tax_file(regional_tax_path)
 
-REGIONAL_BRACKETS = dict()
+REGIONAL_BRACKETS = {}
 
 for region, brackets in regional_data.items():
     REGIONAL_BRACKETS[region] = [
@@ -43,8 +47,8 @@ def get_salary(salary_input: str = None) -> float:
             salary_input = input("How much do you make annually? ")
         salary = float(salary_input)
         return salary
-    except ValueError:
-        raise ValueError("Invalid format, Please try again with correct format (Float, Integer).")
+    except ValueError as err:
+        raise ValueError("Invalid format, Please try again with correct format (Float, Integer).") from err
 
 
 def find_region(region_input: str = None) -> str:
@@ -52,10 +56,9 @@ def find_region(region_input: str = None) -> str:
     if region_input is None:
         region_input = input("Which region do you live in? ").strip()
 
-    for region in REGIONAL_BRACKETS.keys():
+    for region in REGIONAL_BRACKETS:
         if region_input.lower() in region.lower():
             return region
-
     raise ValueError("Region not found")
 
 

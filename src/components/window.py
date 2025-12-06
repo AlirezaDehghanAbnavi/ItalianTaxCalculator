@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 from .title import Title
-from calculations.tax import *
+from calculations.tax import find_region, get_salary, calculate_tax
 
 class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
     def __init__(self):    # JAVA -> Constructor MainWindow(){}

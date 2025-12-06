@@ -1,5 +1,11 @@
-"""This script is used to make an .exe file."""
-from src.main import main
+"""Launcher for the Italian Tax Calculator GUI."""
+from src.components.window import MainWindow
+
+
+def main():
+    """Main body."""
+    app = MainWindow()
+    app.mainloop()
 
 
 if __name__ == "__main__":

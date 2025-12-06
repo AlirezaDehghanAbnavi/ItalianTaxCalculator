@@ -1,13 +1,13 @@
 """Window class representing the main body for GUI elements."""
 import tkinter as tk
-from tkinter import messagebox, ttk
+from tkinter import messagebox
 from src.utils.paths import PHOTOS_DIR
 from src.calculations.tax import find_region, get_salary, calculate_tax, region_names
 from src.components.title import Title
 
-class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
+class MainWindow(tk.Tk):
     """Subclass of Tk for GUI implementation."""
-    def __init__(self):    # JAVA -> Constructor MainWindow(){}
+    def __init__(self):
         """Constructor for Mainwindow class."""
         super().__init__()
 

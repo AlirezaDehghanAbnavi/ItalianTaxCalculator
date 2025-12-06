@@ -5,7 +5,7 @@ from src.utils.paths import PHOTOS_DIR
 from src.calculations.tax import find_region, get_salary, calculate_tax, region_names
 from src.components.title import Title
 
-class MainWindow(tk.Tk):
+class MainWindow(tk.Tk): # pylint: disable=R0902
     """Subclass of Tk for GUI implementation."""
     def __init__(self):
         """Constructor for Mainwindow class."""

@@ -15,8 +15,8 @@ class Title(tk.Label):
             text="Welcome!\n" \
             "You can calculate your taxes here",
             font=("Arial", 20),
-            bg="#123458",
-            fg="white",
+            bg="#E2D5A0",
+            fg="black",
             relief=tk.RAISED,
             bd=5,
             padx=20,

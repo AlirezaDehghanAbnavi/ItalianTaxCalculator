@@ -12,9 +12,9 @@ class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
         super().__init__()
 
 
-        self.geometry("590x750") # Determines size
+        self.geometry("680x850") # Determines size
         self.title("Italian Tax Calculator") # Title
-        self.config(background="#123456") # Set Background Color
+        self.config(background="#F2EBCB") # Set Background Color
 
 
         # Set New Icon
@@ -28,47 +28,46 @@ class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
 
 
         # Region input
-        tk.Label(self, text="Which region do you live in?",
-                    bg="#123456", fg="white", font=("Arial", 15)).pack()
+        tk.Label(self, text="Region of residence:",
+                    bg="#F2EBCB", fg="black", font=("Arial", 15)).pack()
         self.region_entry = tk.Entry(self, width=30)
         self.region_entry.pack(pady=5)
 
 
         # Salary input
-        tk.Label(self, text="How much do you make annually?",
-                  bg="#123456", fg="white", font=("Arial", 15)).pack()
+        tk.Label(self, text="Annual Income:",
+                  bg="#F2EBCB", fg="black", font=("Arial", 15)).pack()
         self.salary_entry = tk.Entry(self, width=30)
         self.salary_entry.pack(pady=5)
 
 
         # Calculate button
-        self.calc_button = tk.Button(self, text="calculate", command=self.calculate)
+        self.calc_button = tk.Button(self, text="calculate", command=self.calculate,
+                                     width=8, height=1, font=("Arial", 12))
         self.calc_button.pack(pady=20)
 
 
         # Result label
         self.result_label = tk.Label(self, text="",
-                                        bg="#123456",
-                                        fg="white", justify="left", font=("Arial", 15))
+                                        bg="#F2EBCB",
+                                        fg="black", justify="left", font=("Arial", 16))
         self.result_label.pack(pady=10)
-
-
-        # Reset Button
-        self.reset_button = tk.Button(self, text="Reset", command=self.reset)
-        self.reset_button.pack(pady=10)
 
 
         # Disclaimer
         self.disclaimer_label = tk.Label(
             self,
-            text="Disclaimer: This calculator provides estimates only. Actual tax may vary.",
-            bg="#123456",
-            fg="black",
-            font=("Arial", 15),
-            wraplength=550,   # wrap text to fit window width
-            justify="center"
+            text="Disclaimer: This calculator provides estimates only. Actual amount may vary.",
+            bg="#F2EBCB",
+            fg="#800020",
+            font=("Arial", 15)
         )
         self.disclaimer_label.pack(side="bottom", pady=10)
+
+
+        # Reset Button
+        self.reset_button = tk.Button(self, text="Reset", command=self.reset)
+        self.reset_button.pack(side="bottom", pady=10)
 
 
     def calculate(self):
@@ -98,7 +97,7 @@ class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
 
 
     def reset(self):
-        """Resetung GUI elements."""
+        """Reseting the result."""
         self.region_entry.delete(0, tk.END)
         self.salary_entry.delete(0, tk.END)
         self.result_label.config(text="")

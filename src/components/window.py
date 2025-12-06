@@ -19,39 +19,39 @@ class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
 
 
         # Displaying title label
-        self.titleLable = Title(self)
-        self.titleLable.pack(pady=5)
+        self.title_label = Title(self)
+        self.title_label.pack(pady=5)
 
 
         # Region input
         tk.Label(self, text="Which region do you live in?", bg="#123456", fg="white", font=("Arial", 15)).pack()
-        self.regionEntry = tk.Entry(self, width=30)
-        self.regionEntry.pack(pady=5)
+        self.region_entry = tk.Entry(self, width=30)
+        self.region_entry.pack(pady=5)
 
 
         # Salary input
         tk.Label(self, text="How much do you make annually?", bg="#123456", fg="white", font=("Arial", 15)).pack()
-        self.salaryEntry = tk.Entry(self, width=30)
-        self.salaryEntry.pack(pady=5)
+        self.salary_entry = tk.Entry(self, width=30)
+        self.salary_entry.pack(pady=5)
 
 
         # Calculate button
-        self.calcButton = tk.Button(self, text="calculate", command=self.calculate)
-        self.calcButton.pack(pady=20)
+        self.calc_button = tk.Button(self, text="calculate", command=self.calculate)
+        self.calc_button.pack(pady=20)
 
 
         # Result label
-        self.resultLabel = tk.Label(self, text="", bg="#123456", fg="white", justify="left", font=("Arial", 15))
-        self.resultLabel.pack(pady=10)
+        self.result_label = tk.Label(self, text="", bg="#123456", fg="white", justify="left", font=("Arial", 15))
+        self.result_label.pack(pady=10)
 
 
         # Reset Button
-        self.resetButton = tk.Button(self, text="Reset", command=self.reset)
-        self.resetButton.pack(pady=10)
+        self.reset_button = tk.Button(self, text="Reset", command=self.reset)
+        self.reset_button.pack(pady=10)
 
 
         # Disclaimer
-        self.disclaimerLabel = tk.Label(
+        self.disclaimer_label = tk.Label(
             self,
             text="Disclaimer: This calculator provides estimates only. Actual tax may vary.",
             bg="#123456",
@@ -60,29 +60,30 @@ class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
             wraplength=550,   # wrap text to fit window width
             justify="center"
         )
-        self.disclaimerLabel.pack(side="bottom", pady=10)
+        self.disclaimer_label.pack(side="bottom", pady=10)
 
 
     def calculate(self):
+        """Demonstrates final results based on inputs."""
         # Empty/Invalid cases
-        if not self.regionEntry.get() or not self.salaryEntry.get():
+        if not self.region_entry.get() or not self.salary_entry.get():
                 messagebox.showerror("Input error", "Please complete both fields")
                 return
         try:
-            regionInput = findRegion(self.regionEntry.get())
-            grossAnnualSalary = getSalary(self.salaryEntry.get())
+            region_input = find_region(self.region_entry.get())
+            gross_annual_salary = get_salary(self.salary_entry.get())
 
         except Exception as error:
             messagebox.showerror("Input error", str(error))
 
         # Calculate tax
-        salaryAfterTax = calculateTax(grossAnnualSalary, regionInput)
-        total_tax = grossAnnualSalary - salaryAfterTax
-        monthly_income = salaryAfterTax / 12
+        salary_after_tax = calculate_tax(gross_annual_salary, region_input)
+        total_tax = gross_annual_salary - salary_after_tax
+        monthly_income = salary_after_tax / 12
 
         # Display result
-        self.resultLabel.config(
-            text=f"Your salary after tax is €{round(salaryAfterTax, 2)}\n"
+        self.result_label.config(
+            text=f"Your salary after tax is €{round(salary_after_tax, 2)}\n"
                 f"You've paid a total amount of €{round(total_tax, 2)} in taxes\n"
                 f"You make €{round(monthly_income, 2)} each month (After taxes)"
         )
@@ -90,7 +91,7 @@ class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
 
     
     def reset(self):
-        self.regionEntry.delete(0, tk.END)
-        self.salaryEntry.delete(0, tk.END)
-        self.resultLabel.config(text="")
+        self.region_entry.delete(0, tk.END)
+        self.salary_entry.delete(0, tk.END)
+        self.result_label.config(text="")
         

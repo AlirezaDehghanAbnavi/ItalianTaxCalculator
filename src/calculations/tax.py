@@ -4,11 +4,12 @@ import os
 INPS_TAX = 0.0919
 
 base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-nationalTaxPath = os.path.join(base_dir, "data", "national_tax.json")
-regionalTaxPath = os.path.join(base_dir, "data", "regional_tax.json")
+national_tax_path = os.path.join(base_dir, "data", "national_tax.json")
+regional_tax_path = os.path.join(base_dir, "data", "regional_tax.json")
 
 
-def loadTaxFile(file_path: str) -> dict:
+def load_tax_file(file_path: str) -> dict:
+    """Opens data files needed by the program."""
     try:
         with open(file_path, "r", encoding="utf-8") as f:
             return json.load(f)
@@ -16,30 +17,31 @@ def loadTaxFile(file_path: str) -> dict:
         raise FileNotFoundError(f"Tax data file not found: {file_path}")
 
 
-nationalData = loadTaxFile(nationalTaxPath)
+national_data = load_tax_file(national_tax_path)
 
 IRPEF_BRACKETS = [
     (bracket[0], float('inf') if bracket[1] == "inf" else bracket[1], bracket[2])
-    for bracket in nationalData.get("IRPEF_BRACKETS", [])
+    for bracket in national_data.get("IRPEF_BRACKETS", [])
 ]
 
 
-regionalData = loadTaxFile(regionalTaxPath)
+regional_data = load_tax_file(regional_tax_path)
 
 REGIONAL_BRACKETS = dict()
 
-for region, brackets in regionalData.items():
+for region, brackets in regional_data.items():
     REGIONAL_BRACKETS[region] = [
         (bracket[0], float('inf') if bracket[1] == "inf" else bracket[1], bracket[2])
         for bracket in brackets
     ]
 
 
-def getSalary(salaryInput: str = None) -> float:
+def get_salary(salary_input: str = None) -> float:
+    """This function asks the user for an input and check it's validity."""
     try:
-        if salaryInput is None:
-            salaryInput = input("How much do you make annually? ")
-        salary = float(salaryInput)
+        if salary_input is None:
+            salary_input = input("How much do you make annually? ")
+        salary = float(salary_input)
         return salary
     except ValueError:
         raise ValueError("Invalid format, Please try again with correct format (Float, Integer).")
@@ -48,35 +50,37 @@ def getSalary(salaryInput: str = None) -> float:
             
 
 
-def findRegion(regionInput: str = None) -> str:
-    if regionInput is None:
-        regionInput = input("Which region do you live in? ").strip()
+def find_region(region_input: str = None) -> str:
+    """This function finds the region from a .json data file."""
+    if region_input is None:
+        region_input = input("Which region do you live in? ").strip()
 
     for region in REGIONAL_BRACKETS.keys():
-        if regionInput.lower() in region.lower():
+        if region_input.lower() in region.lower():
             return region
 
     raise ValueError("Region not found")
 
 
-def calculateTax(grossAnnualSalary, regionInput):
-    salaryAfterTax: float = grossAnnualSalary
-    incomeAfterINPS: float = grossAnnualSalary * (1 - INPS_TAX) 
-    amountOfTax: float = 0
+def calculate_tax(gross_annual_salary, region_input):
+    """This function is the main logic behind calculating taxes."""
+    salary_after_tax: float = gross_annual_salary
+    income_after_INPS: float = gross_annual_salary * (1 - INPS_TAX) 
+    tax_amount: float = 0
     
-    if incomeAfterINPS <= 12000:
-        return incomeAfterINPS
+    if income_after_INPS <= 12000:
+        return income_after_INPS
 
-    for lowerBound, upperBound, taxRate in IRPEF_BRACKETS:
-        if incomeAfterINPS > lowerBound:
-            taxableIncome = min(incomeAfterINPS, upperBound) - lowerBound
-            amountOfTax += taxableIncome * taxRate
+    for lower, upper, tax in IRPEF_BRACKETS:
+        if income_after_INPS > lower:
+            taxable_income = min(income_after_INPS, upper) - lower
+            tax_amount += taxable_income * tax
    
-    for lower, upper, rate in REGIONAL_BRACKETS[regionInput]:
-        if incomeAfterINPS > lower:
-            taxableIncome = min(incomeAfterINPS, upper) - lower
-            amountOfTax += taxableIncome * rate
+    for lower, upper, rate in REGIONAL_BRACKETS[region_input]:
+        if income_after_INPS > lower:
+            taxable_income = min(income_after_INPS, upper) - lower
+            tax_amount += taxable_income * rate
 
-    salaryAfterTax = incomeAfterINPS - amountOfTax
+    salary_after_tax = income_after_INPS - tax_amount
     
-    return salaryAfterTax
+    return salary_after_tax

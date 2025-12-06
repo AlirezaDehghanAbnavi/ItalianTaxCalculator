@@ -90,9 +90,9 @@ class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
 
         # Display result
         self.result_label.config(
-            text=f"Your salary after tax is €{round(salary_after_tax, 2)}\n"
-                f"You've paid a total amount of €{round(total_tax, 2)} in taxes\n"
-                f"You make €{round(monthly_income, 2)} each month (After taxes)"
+            text=f"Total taxes paid: €{round(total_tax, 2)}\n"
+            f"Net salary: €{round(salary_after_tax, 2)}\n"
+            f"Monthly income after taxes: €{round(monthly_income, 2)}"
         )
 
 

@@ -13,7 +13,7 @@ class Title(tk.Label):
         super().__init__(
             parent,
             text="Welcome!\n" \
-            "Use this tool to calculate your taxes accurately and efficiently.",
+            "Use this tool to calculate your taxes.",
             font=("Arial", 20),
             bg="#E2D5A0",
             fg="black",

@@ -4,7 +4,9 @@ from .title import Title
 from calculations.tax import find_region, get_salary, calculate_tax
 
 class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
+    """Subclass of Tk for GUI implementation."""
     def __init__(self):    # JAVA -> Constructor MainWindow(){}
+        """Constructor for Mainwindow class."""
         super().__init__()
 
 
@@ -24,13 +26,15 @@ class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
 
 
         # Region input
-        tk.Label(self, text="Which region do you live in?", bg="#123456", fg="white", font=("Arial", 15)).pack()
+        tk.Label(self, text="Which region do you live in?",
+                    bg="#123456", fg="white", font=("Arial", 15)).pack()
         self.region_entry = tk.Entry(self, width=30)
         self.region_entry.pack(pady=5)
 
 
         # Salary input
-        tk.Label(self, text="How much do you make annually?", bg="#123456", fg="white", font=("Arial", 15)).pack()
+        tk.Label(self, text="How much do you make annually?",
+                  bg="#123456", fg="white", font=("Arial", 15)).pack()
         self.salary_entry = tk.Entry(self, width=30)
         self.salary_entry.pack(pady=5)
 
@@ -41,7 +45,9 @@ class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
 
 
         # Result label
-        self.result_label = tk.Label(self, text="", bg="#123456", fg="white", justify="left", font=("Arial", 15))
+        self.result_label = tk.Label(self, text="",
+                                        bg="#123456",
+                                        fg="white", justify="left", font=("Arial", 15))
         self.result_label.pack(pady=10)
 
 
@@ -92,4 +98,4 @@ class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
     def reset(self):
         self.region_entry.delete(0, tk.END)
         self.salary_entry.delete(0, tk.END)
-        self.result_label.config(text="")      
+        self.result_label.config(text="")

@@ -1,8 +1,9 @@
+"""Combining different modules used to implement the tax calculator."""
 from components.window import MainWindow
-from calculations.tax import *
 
 
 def main():
+    """Main body."""
     app = MainWindow()
     app.mainloop()
 

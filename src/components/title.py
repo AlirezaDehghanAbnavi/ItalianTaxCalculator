@@ -1,3 +1,4 @@
+"""Seperate class to organize title better"""
 import tkinter as tk
 
 

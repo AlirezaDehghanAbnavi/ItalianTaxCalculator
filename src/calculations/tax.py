@@ -48,7 +48,7 @@ def get_salary(salary_input: str = None) -> float:
         salary = float(salary_input)
         return salary
     except ValueError as err:
-        raise ValueError("Invalid format, Please try again with correct format (Float, Integer).") from err
+        raise ValueError("Please try again with correct format (Float, Integer).") from err
 
 
 def find_region(region_input: str = None) -> str:
@@ -56,9 +56,9 @@ def find_region(region_input: str = None) -> str:
     if region_input is None:
         region_input = input("Which region do you live in? ").strip()
 
-    for region in REGIONAL_BRACKETS:
-        if region_input.lower() in region.lower():
-            return region
+    for r in REGIONAL_BRACKETS:
+        if region_input.lower() in r.lower():
+            return r
     raise ValueError("Region not found")
 
 

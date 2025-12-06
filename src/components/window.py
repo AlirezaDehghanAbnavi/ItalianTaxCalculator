@@ -1,8 +1,8 @@
 """Window class representing the main body for GUI elements."""
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, ttk
 from src.utils.paths import PHOTOS_DIR
-from src.calculations.tax import find_region, get_salary, calculate_tax
+from src.calculations.tax import find_region, get_salary, calculate_tax, region_names
 from src.components.title import Title
 
 class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
@@ -27,11 +27,21 @@ class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
         self.title_label.pack(pady=5)
 
 
-        # Region input
+        # Region Drop Down
         tk.Label(self, text="Region of residence:",
                     bg="#F2EBCB", fg="black", font=("Arial", 15)).pack()
-        self.region_entry = tk.Entry(self, width=30)
-        self.region_entry.pack(pady=5)
+        self.clicked = tk.StringVar()
+        self.clicked.set("Select a Region")
+        self.drop_menu = tk.OptionMenu(self, self.clicked, *region_names)
+        self.drop_menu.config(
+            width=20,
+            font=("Arial", 12),
+            bg="lightyellow",
+            fg="black",
+            activebackground="#2999BE",
+            activeforeground="white"
+        )
+        self.drop_menu.pack(pady=5)
 
 
         # Salary input
@@ -44,6 +54,14 @@ class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
         # Calculate button
         self.calc_button = tk.Button(self, text="calculate", command=self.calculate,
                                      width=8, height=1, font=("Arial", 12))
+        self.calc_button.config(
+            width=13,
+            font=("Arial", 12),
+            bg="#EDEFD6",
+            fg="black",
+            activebackground="#2999BE",
+            activeforeground="white"
+        )
         self.calc_button.pack(pady=20)
 
 
@@ -67,17 +85,24 @@ class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
 
         # Reset Button
         self.reset_button = tk.Button(self, text="Reset", command=self.reset)
+        self.reset_button.config(
+            font=("Arial", 10),
+            bg="#EDEFD6",
+            fg="black",
+            activebackground="#AC3434",
+            activeforeground="white"
+        )
         self.reset_button.pack(side="bottom", pady=10)
 
 
     def calculate(self):
         """Demonstrates final results based on inputs."""
         # Empty/Invalid cases
-        if not self.region_entry.get() or not self.salary_entry.get():
-            messagebox.showerror("Input error", "Please complete both fields")
+        if  not self.salary_entry.get():
+            messagebox.showerror("Input error", "Please complete the Income field")
             return
         try:
-            region_input = find_region(self.region_entry.get())
+            region_input = find_region(self.clicked.get())
             gross_annual_salary = get_salary(self.salary_entry.get())
 
         except (ValueError, TypeError) as error:
@@ -98,6 +123,6 @@ class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
 
     def reset(self):
         """Reseting the result."""
-        self.region_entry.delete(0, tk.END)
         self.salary_entry.delete(0, tk.END)
+        self.clicked.set("Select a Region")
         self.result_label.config(text="")

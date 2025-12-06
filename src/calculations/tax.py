@@ -9,9 +9,10 @@ INPS_TAX = 0.0919
 
 national_tax_path = DATA_DIR/"national_tax.json"
 regional_tax_path = DATA_DIR/"regional_tax.json"
+regions_path = DATA_DIR/"regions.json"
 
 
-def load_tax_file(file_path: str) -> dict:
+def load_data_file(file_path: str) -> dict:
     """Opens data files needed by the program."""
     try:
         with open(file_path, "r", encoding="utf-8") as f:
@@ -20,7 +21,9 @@ def load_tax_file(file_path: str) -> dict:
         raise FileNotFoundError(f"Tax data file not found: {file_path}") from err
 
 
-national_data = load_tax_file(national_tax_path)
+region_names = load_data_file(regions_path)["regions"]
+
+national_data = load_data_file(national_tax_path)
 
 IRPEF_BRACKETS = [
     (bracket[0], float('inf') if bracket[1] == "inf" else bracket[1], bracket[2])
@@ -28,7 +31,7 @@ IRPEF_BRACKETS = [
 ]
 
 
-regional_data = load_tax_file(regional_tax_path)
+regional_data = load_data_file(regional_tax_path)
 
 REGIONAL_BRACKETS = {}
 

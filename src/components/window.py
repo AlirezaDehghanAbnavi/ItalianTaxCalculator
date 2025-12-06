@@ -1,7 +1,9 @@
+"""Window class representing the main body for GUI elements."""
 import tkinter as tk
 from tkinter import messagebox
-from .title import Title
+from utils.paths import PHOTOS_DIR
 from calculations.tax import find_region, get_salary, calculate_tax
+from .title import Title
 
 class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
     """Subclass of Tk for GUI implementation."""
@@ -16,7 +18,7 @@ class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
 
 
         # Set New Icon
-        icon = tk.PhotoImage(file='./photos/italia.png')
+        icon = tk.PhotoImage(file=PHOTOS_DIR/"italia.png")
         self.iconphoto(True, icon)
 
 
@@ -96,6 +98,7 @@ class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
 
 
     def reset(self):
+        """Resetung GUI elements."""
         self.region_entry.delete(0, tk.END)
         self.salary_entry.delete(0, tk.END)
         self.result_label.config(text="")

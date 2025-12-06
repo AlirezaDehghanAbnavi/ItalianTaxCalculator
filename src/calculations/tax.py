@@ -3,13 +3,12 @@ This module handles tax calculations and data loading for the TaxCalculator proj
 It provides functions to read JSON files and compute taxes.
 """
 import json
-import os
+from utils.paths import DATA_DIR
 
 INPS_TAX = 0.0919
 
-base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-national_tax_path = os.path.join(base_dir, "data", "national_tax.json")
-regional_tax_path = os.path.join(base_dir, "data", "regional_tax.json")
+national_tax_path = DATA_DIR/"national_tax.json"
+regional_tax_path = DATA_DIR/"regional_tax.json"
 
 
 def load_tax_file(file_path: str) -> dict:

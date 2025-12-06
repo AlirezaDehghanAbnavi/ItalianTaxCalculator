@@ -1,12 +1,13 @@
 """Seperate class to organize title better"""
 import tkinter as tk
+from utils.paths import PHOTOS_DIR
 
 
 class Title(tk.Label):
     """Defining a title for the calculator."""
     def __init__(self, parent):
         """Extending the Label from tkinter."""
-        self.photo = tk.PhotoImage(file='./photos/Logo.png')
+        self.photo = tk.PhotoImage(file=PHOTOS_DIR/"Logo.png")
 
 
         super().__init__(

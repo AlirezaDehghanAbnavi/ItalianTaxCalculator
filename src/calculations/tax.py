@@ -35,14 +35,17 @@ for region, brackets in regionalData.items():
     ]
 
 
-def getSalary(salary: str = None) -> float:
-    while True:
-        if salary is None:
-            salary = input("How much do you make annually? ")
-        try:
-            return float(salary)
-        except ValueError:
-            print("Invalid format, Please try again with correct format (Float, Integer).")
+def getSalary(salaryInput: str = None) -> float:
+    try:
+        if salaryInput is None:
+            salaryInput = input("How much do you make annually? ")
+        salary = float(salaryInput)
+        return salary
+    except ValueError:
+        raise ValueError("Invalid format, Please try again with correct format (Float, Integer).")
+
+        
+            
 
 
 def findRegion(regionInput: str = None) -> str:

@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 from .title import Title
 from calculations.tax import *
 
@@ -54,7 +55,7 @@ class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
             self,
             text="Disclaimer: This calculator provides estimates only. Actual tax may vary.",
             bg="#123456",
-            fg="red",
+            fg="black",
             font=("Arial", 15),
             wraplength=550,   # wrap text to fit window width
             justify="center"
@@ -63,8 +64,16 @@ class MainWindow(tk.Tk):   # JAVA -> Class MainWindow extendes tk.Tk
 
 
     def calculate(self):
-        regionInput = findRegion(self.regionEntry.get())
-        grossAnnualSalary = getSalary(self.salaryEntry.get())
+        # Empty/Invalid cases
+        if not self.regionEntry.get() or not self.salaryEntry.get():
+                messagebox.showerror("Input error", "Please complete both fields")
+                return
+        try:
+            regionInput = findRegion(self.regionEntry.get())
+            grossAnnualSalary = getSalary(self.salaryEntry.get())
+
+        except Exception as error:
+            messagebox.showerror("Input error", str(error))
 
         # Calculate tax
         salaryAfterTax = calculateTax(grossAnnualSalary, regionInput)
